@@ -1,0 +1,42 @@
+{# templates/projet/admin.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Partie admin {% endblock %}
+
+
+{% block body %}
+
+    <div class="container-fluid">
+    <div class="jumbotron text-center">
+        <h1> Bonjour en partie admin !</h1>
+        <p>Projet en construction, prière de ne pas tout casser !</p>
+    </div>
+        
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+            {{ message }}
+            </div>
+        {% endfor %}
+        
+        <h2>Gèrer les posts :</h2>
+        <div class="row flew">
+        {% for post in posts %}
+            <div class="col-12">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+                <a href="{{ path('admin.post.edit', {id: post.id}) }}" class="btn btn-primary">Editer</a>
+                <form method="post" action="{{ path('admin.post.delete', {id: post.id}) }}" style="display: inline-block" onsubmit="return confirm('Voulez vous vraiment supprimer ?')">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+        
+    </div>
+
+
+
+{% endblock %}

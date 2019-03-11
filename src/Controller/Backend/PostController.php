@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Backend;
 
 use App\Form\PostType;
 use App\Entity\Post;
@@ -38,22 +38,25 @@ class PostController extends AbstractController
     public function index()
     {
         $posts = $this->repository->findAll();
-        return $this->render('projet/admin.html.twig', ['posts' => $posts]);
+        return $this->render('projet/Backend/admin.html.twig', ['posts' => $posts]);
         
     }
     
     
     /**
-     * @Route("/create", name="post.add")
+     * @Route("/admin/post/create", name="admin.post.add")
      */
     
     public function add(Request $request)
     {
         $post = new Post();
+        $user = $this->getUser();
+        dump($user);
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
         
             if($form->isSubmitted() && $form->isValid()) {
+                $post->setAuthor($user);
                 $this->em->persist($post);
                 $this->em->flush();
                 $this->addFlash('success', 'Nouveau post crée !');
@@ -61,12 +64,12 @@ class PostController extends AbstractController
                 return $this->redirectToRoute('admin.index');
             }
         
-        return $this->render('projet/add.html.twig', ['Post' => $post, 'form' => $form->CreateView()]);
+        return $this->render('projet/Backend/add.html.twig', ['Post' => $post, 'form' => $form->CreateView()]);
     }
     
     
     /**
-     * @Route("/admin/{id}", name="admin.post.edit", methods="GET|POST")
+     * @Route("/admin/post/{id}", name="admin.post.edit", methods="GET|POST")
      */
     
     public function edit(Post $post, Request $request) 
@@ -79,22 +82,23 @@ class PostController extends AbstractController
                 $this->addFlash('success', 'Mise à jour enregistrée !');
                 return $this->redirectToRoute('admin.index');
             }
-        return $this->render('projet/edit.html.twig', ['Post' => $post, 'form' => $form->CreateView()]);
+        return $this->render('projet/Backend/edit.html.twig', ['post' => $post, 'form' => $form->CreateView()]);
     }
     
     
     /**
-     * @Route("/admin/{id}", name="admin.post.delete", methods="DELETE")
+     * @Route("/admin/post/{id}", name="admin.post.delete", methods="DELETE")
      */
     public function delete(Post $post, Request $request)
     {
         if($this->isCsrfTokenValid('delete' . $post->getId(), $request->get('_token') )) {
         $this->em->remove($post);
-        $this->em->flush();
+        $this->em->flush($post);
             $this->addFlash('success', 'Message supprimé avec succès !');
         }
         
         return $this->redirectToRoute('admin.index');
+
     }
 
 }

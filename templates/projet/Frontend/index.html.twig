@@ -1,4 +1,4 @@
-{# templates/projet/index.html.twig #}
+{# templates/projet/Frontend/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 
@@ -7,24 +7,23 @@
 
 {% block body %}
 
-    <div class="container-fluid">
     <div class="jumbotron text-center">
         <h1> Bienvenue sur ce nouveau site !</h1>
         <p>Projet en construction, prière de ne pas casser tout !</p>
     </div>
         
-        <h2>Liste des posts :</h2>
+        <h1>Posts les plus récents :</h1>
         <div class="row flew">
         {% for post in posts %}
             <div class="col-6">
                 <h3>{{ post.title }}</h3>
+                <div><img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" alt=""></div>
+                <p>Ecrit par {{ post.author.username}}</p>
                 <p>{{ post.content }}</p>
                 <a href="{{ path('post.view', {id: post.id}) }}" class="btn btn-primary">Voir le post</a>
             </div>
         {% endfor %}
         </div>
-        
-    </div>
 
 
 

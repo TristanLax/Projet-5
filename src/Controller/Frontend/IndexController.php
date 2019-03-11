@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Frontend;
 
-use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Post;
@@ -36,7 +36,7 @@ class IndexController extends AbstractController
         public function index()
     {
         $posts = $this->repository->findAll();
-        return $this->render('projet/index.html.twig', ['posts' => $posts]);
+        return $this->render('projet/Frontend/index.html.twig', ['posts' => $posts]);
     }
     
     /**
@@ -44,7 +44,6 @@ class IndexController extends AbstractController
      */
         public function postView(Post $post)
     {
-        $posts = $this->repository->findAll();
-        return $this->render('projet/postView.html.twig', ['post' => $post]);
+        return $this->render('projet/Frontend/postView.html.twig', ['post' => $post]);
     }
 }

@@ -1,4 +1,4 @@
-{# templates/projet/postView.html.twig #}
+{# templates/projet/Frontend/postView.html.twig #}
 {% extends 'base.html.twig' %}
 
 
@@ -7,16 +7,18 @@
 
 {% block body %}
 
-    <div class="container-fluid">
         
         <div class="row">
             <div class="col-12 text-center">
                 <h3>{{ post.title }}</h3>
+                <div class="col-lg-12">
+                    <img src="{{ vich_uploader_asset(post, 'mainImage') }}" width="50%" alt="">
+                </div>
                     <div class="col-lg-4">
                         <div class="row flex justify-content-start flex-wrap">
                         {% for picture in post.pictures %}
-                            <div class="col">
-                            <img src="{{ vich_uploader_asset(picture, 'imageFile') }}" width="100%" alt="">
+                            <div class="col-lg-12">
+                                <img src="{{ vich_uploader_asset(picture, 'imageFile') }}" width="50%" alt="">
                             </div>
                         {% endfor %}
                         </div>
@@ -24,8 +26,6 @@
                 <p>{{ post.content }}</p>
             </div>
         </div>
-        
-    </div>
 
 
 

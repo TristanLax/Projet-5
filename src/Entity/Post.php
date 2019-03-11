@@ -5,10 +5,16 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
+ * @UniqueEntity("title")
+ * @Vich\Uploadable
  */
 class Post
 {
@@ -20,6 +26,7 @@ class Post
     private $id;
 
     /**
+     * @Assert\Length(min=4, max=255)
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -54,8 +61,30 @@ class Post
     * @Assert\Image(mimeTypes="image/jpeg")
     * })
     */
-    
     private $pictureFiles;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mainfile;
+
+
+    /**
+     * @var File|null
+     * @Assert\Image(
+     *     mimeTypes="image/jpeg")
+     * @Vich\UploadableField(mapping="post_main", fileNameProperty="mainfile")
+     */
+
+    private $mainImage;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="user_posts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Author;
+
     
     
     public function __construct()
@@ -128,6 +157,47 @@ class Post
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getMainfile(): ?string
+    {
+        return $this->mainfile;
+    }
+
+    /**
+     * @param string|null $mainfile
+     */
+    public function setMainfile(?string $mainfile): void
+    {
+        $this->mainfile = $mainfile;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getMainImage(): ?File
+    {
+        return $this->mainImage;
+    }
+
+    /**
+     * @param File|null $mainImage
+     */
+    public function setMainImage(?File $mainImage): void
+    {
+        $this->mainImage = $mainImage;
+        if($this->mainImage instanceof UploadedFile) {
+            $this->edit_date = new \DateTime('now');
+        }
+    }
+
+
+
+
+
+
     
     public function getPictureFiles()
     {
@@ -177,4 +247,17 @@ class Post
 
         return $this;
     }
+
+    public function getAuthor(): ?User
+    {
+        return $this->Author;
+    }
+
+    public function setAuthor(?User $Author): self
+    {
+        $this->Author = $Author;
+
+        return $this;
+    }
+
 }

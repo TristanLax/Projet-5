@@ -20,6 +20,7 @@ class PostType extends AbstractType
             ->add('title')
             ->add('content')
             ->add('votes')
+            ->add('mainImage', FileType::class, ['required' => false])
             ->add('pictureFiles', FileType::class, ['required' => false, 'multiple' => true])
         ;
     }

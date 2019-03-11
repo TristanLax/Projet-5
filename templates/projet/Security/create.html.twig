@@ -1,0 +1,16 @@
+{# templates/projet/Security/create.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %} S'inscrire {% endblock %}
+
+
+{% block body %}
+
+{{ form_start(form) }}
+
+
+{{ form_widget(form) }}
+<button class="btn btn-secondary">S'inscrire</button>
+{{ form_end(form) }}
+
+{% endblock %}

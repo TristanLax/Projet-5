@@ -2,3 +2,8 @@ body
 {
     background-color: gray;
 }
+
+#menu
+{
+    padding: 0px;
+}

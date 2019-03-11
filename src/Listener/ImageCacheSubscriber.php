@@ -5,7 +5,6 @@ namespace App\Listener;
 use App\Entity\Post;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -36,23 +35,23 @@ class ImageCacheSubscriber implements EventSubscriber
         
         $entity = $args->getEntity();
         
-        if (!$entity instanceof Picture) {
+        if (!$entity instanceof Post) {
             return;
         }
         
-        $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'imageFile'));
+        $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'mainImage'));
     }
 
     public function preUpdate(PreUpdateEventArgs $args) {
         
         $entity = $args->getEntity();
         
-        if (!$entity instanceof Picture) {
+        if (!$entity instanceof Post) {
             return;
         }
         
-        if ($entity->getImageFile() instanceof UploadedFile) {
-            $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'imageFile'));
+        if ($entity->getMainImage() instanceof UploadedFile) {
+            $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'mainImage'));
         }
     }
 }

@@ -7,24 +7,30 @@
 
 {% block body %}
 
-    <div class="jumbotron text-center">
-        <h1> Bienvenue sur ce nouveau site !</h1>
-        <p>Projet en construction, prière de ne pas casser tout !</p>
-    </div>
-        
-        <h1>Posts les plus récents :</h1>
+        <h1 class="m-3 text-center">Posts les mieux votés :</h1>
+
+
+        <h1 class="m-3 text-center">Posts les plus récents :</h1>
         <div class="row flew">
         {% for post in posts %}
-            <div class="col-6">
-                <h3>{{ post.title }}</h3>
-                <div><img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" alt=""></div>
-                <p>Ecrit par {{ post.author.username}}</p>
-                <p>{{ post.content }}</p>
-                <a href="{{ path('post.view', {id: post.id}) }}" class="btn btn-primary">Voir le post</a>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div><img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" class="card-img-top" alt=""></div>
+                        <h3 class="card-title">{{ post.title }}</h3>
+                        <p>Écrit par {{ post.author.username }}</p>
+                        <p>{{ post.content }}</p>
+                        <a href="{{ path('post.view', {id: post.id}) }}" class="card-link">Voir le post</a>
+                    </div>
+                </div>
             </div>
         {% endfor %}
         </div>
 
+
+    <div class="navigation">
+        {{ knp_pagination_render(posts) }}
+    </div>
 
 
 {% endblock %}

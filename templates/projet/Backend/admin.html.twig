@@ -10,7 +10,6 @@
 
     <div class="jumbotron text-center">
         <h1> Bonjour en partie admin !</h1>
-        <p>Projet en construction, prière de ne pas tout casser !</p>
     </div>
         
         {% for message in app.flashes('success') %}
@@ -19,7 +18,6 @@
             </div>
         {% endfor %}
 
-        <a class="btn btn-primary" href="{{ path('admin.post.add') }}">Ecrire</a>
         
         <h2>Gèrer les posts :</h2>
         <div class="row flew">

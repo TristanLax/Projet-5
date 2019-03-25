@@ -1,0 +1,35 @@
+{# templates/projet/Backend/profil.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Profil {% endblock %}
+
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col-lg-12 text-center">Bonjour {{ user.username  }} !</div>
+</div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <h2>Gèrer les posts :</h2>
+    <div class="row flew">
+        {% for post in posts %}
+            <div class="col-12">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+                <a href="{{ path('profil.post.edit', {id: post.id}) }}" class="btn btn-primary">Editer</a>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+
+{% endblock %}

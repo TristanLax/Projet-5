@@ -1,0 +1,22 @@
+{# templates/projet/Frontent/addComment.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Ecrire un commentaire {% endblock %}
+
+
+{% block body %}
+
+
+    <h2>Répondre à un sujet :</h2>
+    <div>
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+        <button class="btn btn-secondary">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+
+
+
+{% endblock %}

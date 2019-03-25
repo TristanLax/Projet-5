@@ -39,35 +39,32 @@ class PostController extends AbstractController
     {
         $posts = $this->repository->findAll();
         return $this->render('projet/Backend/admin.html.twig', ['posts' => $posts]);
-        
+
     }
-    
-    
+
     /**
-     * @Route("/admin/post/create", name="admin.post.add")
+     * @Route("/profil/post/create", name="user.post.add")
      */
-    
+
     public function add(Request $request)
     {
         $post = new Post();
         $user = $this->getUser();
-        dump($user);
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-        
-            if($form->isSubmitted() && $form->isValid()) {
-                $post->setAuthor($user);
-                $this->em->persist($post);
-                $this->em->flush();
-                $this->addFlash('success', 'Nouveau post crée !');
-                
-                return $this->redirectToRoute('admin.index');
-            }
-        
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $post->setAuthor($user);
+            $this->em->persist($post);
+            $this->em->flush();
+            $this->addFlash('success', 'Nouveau post crée !');
+
+            return $this->redirectToRoute('profil.index');
+        }
+
         return $this->render('projet/Backend/add.html.twig', ['Post' => $post, 'form' => $form->CreateView()]);
     }
-    
-    
+
     /**
      * @Route("/admin/post/{id}", name="admin.post.edit", methods="GET|POST")
      */

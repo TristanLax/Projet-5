@@ -2,7 +2,7 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %} Editer {% endblock %}
+{% block title %} Ecrire un post {% endblock %}
 
 
 {% block body %}
@@ -13,9 +13,9 @@
             {{ form_start(form) }}
             
             <div class="row">
-                <div class="col-lg-4">{{ form_row(form.title) }}</div>
-                <div class="col-lg-4">{{ form_row(form.content) }}</div>
-                <div class="col-lg-4">{{ form_row(form.votes) }}</div>
+                <div class="col-lg-12">{{ form_row(form.title) }}</div>
+                <div class="col-lg-12">{{ form_row(form.content) }}</div>
+                <div class="col-lg-12">{{ form_row(form.mainImage) }}</div>
                 <div class="col-lg-12">{{ form_row(form.pictureFiles) }}</div>
             </div>
 

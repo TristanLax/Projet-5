@@ -46,7 +46,7 @@ class SecurityController extends AbstractController{
     /**
      * @Route("/create", name="create.account")
      */
-    public function newUser(Request $request)
+    public function newUser(Request $request, \Swift_Mailer $mailer)
     {
         {
             $user = new User();
@@ -59,7 +59,19 @@ class SecurityController extends AbstractController{
                 $this->em->persist($user);
                 $this->em->flush();
 
-                return $this->redirectToRoute('login');
+                $mail = (new \Swift_Message('Email de bienvenue'))
+                    ->setFrom('Tanamassar@gmail.com')
+                    ->setTo($user->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'projet/Security/email.html.twig',
+                        ['pseudo' => $user->getUsername()]
+                        ),
+                        'text/html'
+                    );
+
+                $mailer->send($mail);
+
             }
 
             return $this->render('projet/Security/create.html.twig', ['User' => $user, 'form' => $form->CreateView()]);

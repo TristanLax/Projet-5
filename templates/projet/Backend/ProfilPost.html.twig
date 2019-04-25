@@ -1,0 +1,53 @@
+{# templates/projet/Backend/profilPost.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Profil {% endblock %}
+
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h5 class="text-center m-3">Accèder à :</h5>
+            <p class="link">
+                <a href="{{ path('profil.index') }}" class="btn btn-primary m-1">Votre profil</a>
+                <a href="{{ path('profil.messageIndex') }}" class="btn btn-primary m-1">Vos messages privés</a>
+            </p>
+
+        </div>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <h2>Voir vos posts ouverts :</h2>
+    <div class="row flew">
+
+        {% for post in posts %}
+
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 post_{{ post.id }}">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" class="card-img-top" alt="">
+                        <h4><a href="{{ path('post.view', {id: post.id}) }}" class="card-link">{{ post.title }}</a></h4>
+                        <p class=""> {{ (post.content|length > 60 ? post.content|slice(0, 60) ~ '...' : post.content)|striptags }}</p>
+                        <a href="{{ path('admin.post.edit', {id: post.id}) }}" class="btn btn-primary">Editer</a>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="navigation d-flex justify-content-center m-3">
+        {{ knp_pagination_render(posts) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{# templates/projet/Frontent/PrivateMessage.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Envoyer un message privé {% endblock %}
+
+
+{% block body %}
+
+
+    <h2>Message privé :</h2>
+    <div>
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+        <button class="btn btn-secondary">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+
+
+
+{% endblock %}

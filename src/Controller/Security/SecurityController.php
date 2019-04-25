@@ -4,6 +4,7 @@ namespace App\Controller\Security;
 
 use App\Form\UserType;
 use App\Entity\User;
+use App\Service\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,16 +21,22 @@ class SecurityController extends AbstractController{
      */
     private $em;
 
-        /**
-         * @var UserPasswordEncoderInterface
-         */
+    /**
+     * @var UserPasswordEncoderInterface
+     */
     private $encoder;
 
+    /**
+     * @var Email
+     */
+    private $email;
 
-    public function __construct(ObjectManager $em, UserPasswordEncoderInterface $encoder)
+
+    public function __construct(ObjectManager $em, UserPasswordEncoderInterface $encoder, Email $email)
     {
         $this->em = $em;
         $this->encoder = $encoder;
+        $this->email = $email;
     }
 
     /**
@@ -46,7 +53,7 @@ class SecurityController extends AbstractController{
     /**
      * @Route("/create", name="create.account")
      */
-    public function newUser(Request $request, \Swift_Mailer $mailer)
+    public function newUser(Request $request)
     {
         {
             $user = new User();
@@ -58,19 +65,9 @@ class SecurityController extends AbstractController{
                 $user->setPassword($password);
                 $this->em->persist($user);
                 $this->em->flush();
+                $this->email->SendMail($user);
 
-                $mail = (new \Swift_Message('Email de bienvenue'))
-                    ->setFrom('Tanamassar@gmail.com')
-                    ->setTo($user->getEmail())
-                    ->setBody(
-                        $this->renderView(
-                            'projet/Security/email.html.twig',
-                        ['pseudo' => $user->getUsername()]
-                        ),
-                        'text/html'
-                    );
-
-                $mailer->send($mail);
+                return $this->redirectToRoute('login');
 
             }
 

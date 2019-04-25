@@ -1,13 +1,14 @@
 body
 {
-    background-color: #FAEBD7;
+    background-color: #ede8d9;
 }
+
 
 #header-text
 {
     background-color: #122226;
     color: #e1e2c8;
-    margin: 0px;
+    margin: 0;
 }
 
 .navbar
@@ -28,20 +29,115 @@ body
 
 #menu
 {
-    padding: 0px;
+    padding: 0;
 }
 
 .card
 {
     margin: 10px;
+    background-color: #f7f0e5;
+}
+.post-username
+{
+    font-size: 90%;
+    color: #6c757d;
+}
+
+.post-title
+{
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.link
+{
+    text-align: center;
+}
+
+.maintext
+{
+    background-color: #f7f0e5;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 10px;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 6px;
+}
+
+.maintext p
+{
+    margin-bottom: 0;
+}
+
+.mainimage
+{
+    max-width: 100%;
 }
 
 .comment
 {
-    background-color: #999999;
+    background-color: #f7f0e5;
     margin-top: 40px;
-    margin-bottom: 20px;
     color: black;
-    border: 2px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 6px;
+}
+
+.comment-text
+{
+    margin-top: 10px;
+}
+
+.button-replacement
+{
+    margin: 16px;
+}
+
+th
+{
+    border: 2px solid black;
+    padding: 10px;
+}
+
+td
+{
+    border: 2px solid black;
+    padding: 5px;
+}
+
+
+
+@media all and (min-width: 992px) and (max-width: 1280px)
+{
+    .secondary-img
+    {
+        width: 80%;
+    }
+
+}
+
+
+@media all and (min-width: 768px) and (max-width: 992px)
+{
+    .secondary-img
+    {
+        width: 80%;
+    }
+}
+
+
+@media all and (max-width: 768px),
+all and (max-device-width: 480px)
+{
+    .mainimage
+    {
+        width: 100%;
+    }
+
+    .secondary-img
+    {
+        width: 80%;
+    }
+
 }

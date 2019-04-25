@@ -4,7 +4,10 @@ namespace App\Controller\Backend;
 
 use App\Form\PostType;
 use App\Entity\Post;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,28 +20,50 @@ class PostController extends AbstractController
      * @var PostRepository
      */
     private $repository;
-    
-    
+
+
+    /**
+     * @var CommentRepository
+     */
+    private $cr;
+
     /**
      * @var ObjectManager
      */
     private $em;
     
     
-    public function __construct(PostRepository $repository, ObjectManager $em)
+    public function __construct(PostRepository $repository, ObjectManager $em, CommentRepository $cr)
     {
         $this->repository = $repository;
         $this->em = $em;
+        $this->cr = $cr;
     }
     
     /**
      * @Route("/admin", name="admin.index")
      */
     
-    public function index()
+    public function index(PaginatorInterface $paginator, Request $request)
     {
-        $posts = $this->repository->findAll();
-        return $this->render('projet/Backend/admin.html.twig', ['posts' => $posts]);
+        $reportedComments = $paginator->paginate(
+            $this->cr->countReports(),
+            $request->query->getInt('reportedComments', 1),
+            6,
+            ['pageParameterName' => 'reportedComments']);
+
+
+        $user = $this->getUser();
+
+        $reportedPosts = $paginator->paginate(
+            $this->repository->countReports(),
+            $request->query->getInt('page', 1),
+            6);
+
+        $comments = $this->cr->findAll();
+
+
+        return $this->render('projet/Backend/admin.html.twig', ['reportedPosts' => $reportedPosts, 'comments' => $comments ,'user' => $user, 'reportedComments' => $reportedComments]);
 
     }
 
@@ -84,17 +109,14 @@ class PostController extends AbstractController
     
     
     /**
-     * @Route("/admin/post/{id}", name="admin.post.delete", methods="DELETE")
+     * @Route("/admin/post/delete/{id}", name="admin.post.delete")
      */
-    public function delete(Post $post, Request $request)
+    public function delete(Post $post)
     {
-        if($this->isCsrfTokenValid('delete' . $post->getId(), $request->get('_token') )) {
         $this->em->remove($post);
         $this->em->flush($post);
-            $this->addFlash('success', 'Message supprimé avec succès !');
-        }
-        
-        return $this->redirectToRoute('admin.index');
+
+        return new JsonResponse(['data' => []]);
 
     }
 

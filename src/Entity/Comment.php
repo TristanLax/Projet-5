@@ -29,6 +29,11 @@ class Comment
     private $comment_date;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $edit_date;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -44,6 +49,7 @@ class Comment
      * @ORM\OneToMany(targetEntity="App\Entity\CommentReports", mappedBy="comment", orphanRemoval=true)
      */
     private $reports;
+
 
     public function __construct()
     {
@@ -76,6 +82,18 @@ class Comment
     public function setCommentDate(\DateTimeInterface $comment_date): self
     {
         $this->comment_date = $comment_date;
+
+        return $this;
+    }
+
+    public function getEditDate(): ?\DateTimeInterface
+    {
+        return $this->edit_date;
+    }
+
+    public function setEditDate(?\DateTimeInterface $edit_date): self
+    {
+        $this->edit_date = $edit_date;
 
         return $this;
     }
@@ -134,4 +152,5 @@ class Comment
 
         return $this;
     }
+
 }

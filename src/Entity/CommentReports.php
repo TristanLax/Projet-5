@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentReportsRepository")
@@ -23,12 +24,14 @@ class CommentReports
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="user_reports")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(1)
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="reports")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(1)
      */
     private $comment;
 

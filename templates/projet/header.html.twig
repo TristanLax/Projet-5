@@ -17,6 +17,7 @@
                     <div class="navbar-nav mr-auto">
                         <a class=" nav-item nav-link" href="{{ path('home.index') }}">Index</a>
                         <a class="nav-item nav-link" href="{{ path('categories.index') }}">Catégories</a>
+                        <a class="nav-item nav-link" href="{{ path('liste.index') }}">Liste des membres</a>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a class="nav-item nav-link" href="{{ path('admin.index') }}">Admin</a>
                         {% endif %}

@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\CommentReports;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +19,17 @@ class CommentRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Comment::class);
+    }
+
+    public function countReports()
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin(CommentReports::class, 'cr', JOIN::WITH, 'cr.comment = c.id')
+            ->select('COUNT(c.id) AS nbReport ', 'c AS comment')
+            ->groupBy('c.id')
+            ->orderBy('nbReport', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

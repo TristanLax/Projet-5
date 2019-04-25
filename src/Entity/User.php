@@ -6,12 +6,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email")
  * @UniqueEntity("username")
+ * @Vich\Uploadable()
  */
 class User implements UserInterface,\Serializable
 {
@@ -44,7 +48,19 @@ class User implements UserInterface,\Serializable
     private $roles = ['ROLE_USER'];
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="Author", orphanRemoval=true, cascade={"persist"})
+     * @var string|null
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filename;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="filename")
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="author", orphanRemoval=true, cascade={"persist"})
      */
     private $user_posts;
 
@@ -62,14 +78,38 @@ class User implements UserInterface,\Serializable
      * @ORM\OneToMany(targetEntity="App\Entity\CommentReports", mappedBy="user", orphanRemoval=true)
      */
     private $user_reports;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PostReports", mappedBy="user", orphanRemoval=true)
+     */
+    private $post_reports;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="sender", orphanRemoval=true)
+     */
+    private $sender;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="receiver", orphanRemoval=true)
+     */
+    private $receiver;
     
 
     public function __construct()
     {
+        $this->updated_at = new \DateTime();
         $this->user_posts = new ArrayCollection();
         $this->user_comments = new ArrayCollection();
         $this->user_votes = new ArrayCollection();
         $this->user_reports = new ArrayCollection();
+        $this->post_reports = new ArrayCollection();
+        $this->sender = new ArrayCollection();
+        $this->receiver = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,6 +168,41 @@ class User implements UserInterface,\Serializable
     public function getSalt()
     {
         return null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param null|string $filename
+     */
+    public function setFilename(?string $filename): void
+    {
+        $this->filename = $filename;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param null|File $imageFile
+     */
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
     }
 
     /**
@@ -283,6 +358,111 @@ class User implements UserInterface,\Serializable
             // set the owning side to null (unless already changed)
             if ($userReport->getUser() === $this) {
                 $userReport->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PostReports[]
+     */
+    public function getPostReports(): Collection
+    {
+        return $this->post_reports;
+    }
+
+    public function addPostReport(PostReports $postReport): self
+    {
+        if (!$this->post_reports->contains($postReport)) {
+            $this->post_reports[] = $postReport;
+            $postReport->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostReport(PostReports $postReport): self
+    {
+        if ($this->post_reports->contains($postReport)) {
+            $this->post_reports->removeElement($postReport);
+            // set the owning side to null (unless already changed)
+            if ($postReport->getUser() === $this) {
+                $postReport->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getSender(): Collection
+    {
+        return $this->sender;
+    }
+
+    public function addSender(Message $sender): self
+    {
+        if (!$this->sender->contains($sender)) {
+            $this->sender[] = $sender;
+            $sender->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSender(Message $sender): self
+    {
+        if ($this->sender->contains($sender)) {
+            $this->sender->removeElement($sender);
+            // set the owning side to null (unless already changed)
+            if ($sender->getSender() === $this) {
+                $sender->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getReceiver(): Collection
+    {
+        return $this->receiver;
+    }
+
+    public function addReceiver(Message $receiver): self
+    {
+        if (!$this->receiver->contains($receiver)) {
+            $this->receiver[] = $receiver;
+            $receiver->setReceiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceiver(Message $receiver): self
+    {
+        if ($this->receiver->contains($receiver)) {
+            $this->receiver->removeElement($receiver);
+            // set the owning side to null (unless already changed)
+            if ($receiver->getReceiver() === $this) {
+                $receiver->setReceiver(null);
             }
         }
 

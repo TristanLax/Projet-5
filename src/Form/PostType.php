@@ -17,7 +17,10 @@ class PostType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array('label' => 'Titre :'))
-            ->add('content', TextareaType::class, array('label' => 'Message :'))
+            ->add('content', TextareaType::class, array(
+                'attr' => array('class' => 'ckeditor'),
+                'label' => 'Message :'
+            ))
             ->add('mainImage', FileType::class, array('label' => 'Image principale :'))
             ->add('pictureFiles', FileType::class, array(
                 'required' => false, 'multiple' => true,

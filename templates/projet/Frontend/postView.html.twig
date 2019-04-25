@@ -9,64 +9,96 @@
 
         
         <div class="row">
-
-            {% if vote == false and app.user %}
-
-                <a href="{{ path('post.vote', {id: post.id}) }}" class="btn btn-primary">Voter pour ce post</a>
-
-            {% elseif vote == true %}
-
-                <a href="{{ path('post.unvote', {id: post.id}) }}" class="btn btn-primary">Annuler mon vote</a>
-
-            {% else %}
-
-                <p>Veuillez vous connecter pour pouvoir voter !</p>
-
-            {% endif %}
-
             <div class="col-lg-12 text-center">
-                <h3>{{ post.title }}</h3>
+
+                <h3 class="m-3">Posté par {{ post.author.username }}</h3>
+
+                {% if vote == false and app.user %}
+
+                    <a href="{{ path('post.vote', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-warning vote m-3">Voter pour ce post</a>
+
+                {% elseif vote == true %}
+
+                    <a href="{{ path('post.unvote', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-warning unvote m-3">Annuler mon vote</a>
+
+                {% else %}
+
+                    <h5 class="m-3">Veuillez vous connecter pour pouvoir intéragir avec ce post !</h5>
+
+                {% endif %}
+
+                {% if postReport == false and app.user %}
+
+                    <a href="{{ path('post.report', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-danger postReport m-3">Signaler ce post</a>
+
+                {% else %}
+
+                    <a href="{{ path('post.report.remove', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-danger removeReport m-3">Retirer mon signalement</a>
+
+                {% endif  %}
+
+
+                {% if is_granted('ROLE_ADMIN') %}
+
+                    <a href="{{ path('admin.post.edit', {id: post.id}) }}" class="btn btn-info m-3">Modèrer</a>
+
+                {% endif %}
+
                 <div class="col-lg-12">
-                    <img src="{{ vich_uploader_asset(post, 'mainImage') }}" width="50%" alt="">
+                    <img src="{{ vich_uploader_asset(post, 'mainImage') }}" class="mainimage" alt="">
                 </div>
-                    <div class="col-lg-4">
-                        <div class="row flex justify-content-start flex-wrap">
+                <h3 class="m-3">{{ post.title }}</h3>
+                <div class="col-lg-12 maintext">{{ post.content | raw }}</div>
+
+                <div class="col-lg-12">
+                    <div class="row flex justify-content-start flex-wrap">
                         {% for picture in post.pictures %}
-                            <div class="col-lg-12">
-                                <img src="{{ vich_uploader_asset(picture, 'imageFile') }}" width="50%" alt="">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <a href="{{ vich_uploader_asset(picture, 'imageFile') }}"><img src="{{ vich_uploader_asset(picture, 'imageFile') | imagine_filter('thumb') }}" alt="" class="secondary-img m-3"></a>
                             </div>
                         {% endfor %}
-                        </div>
                     </div>
-                <p>{{ post.content }}</p>
+                </div>
             </div>
         </div>
 
             <div class="row">
             <div class="col-lg-12">
                 {% if app.user %}
-                <a class="btn btn-primary" href="{{ path('comment.add', {id: post.id}) }}">Ecrire un commentaire</a>
+                <div class="d-flex justify-content-center m-5">
+                 <a class="btn btn-primary" href="{{ path('comment.add', {id: post.id}) }}">Ecrire un commentaire</a>
+                </div>
                 {% endif %}
 
                 {% for comment in post.comments %}
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-10 offset-lg-1">
+
                         <div class="col-lg-12 comment">
-
-                        <div><p>Réponse écrite par : {{ comment.author.username }}</p></div>
-                        <div><p>{{ comment.content }}</p></div>
-
-                            {% if app.user  %}
-
-                                <a href="{{ path('comment.report', {id: comment.id}) }}" class="btn btn-primary">Signaler ce commentaire</a>
-
-                            {% elseif app.user %}
-
-                                <p>Vous avez déjà signalé ce post !</p>
-
-                            {% endif %}
-
+                            <div>{{ comment.commentDate|date('d-m-Y H:i') }}</div>
+                        <div class="comment-text"><p>{{ comment.content | raw }}</p></div>
+                        <div class="text-right font-italic"><p>Réponse écrite par : {{ comment.author.username }}</p></div>
                         </div>
+
+                        <div class="text-right">
+
+                        {% if app.user and comment.id in signalements %}
+
+                            <a href="{{ path('report.remove', {id: comment.id}) }}" data-commentid="{{ comment.id }}" class="btn btn-danger unreport">Annuler le signalement</a>
+
+                        {% elseif app.user %}
+
+                            <a href="{{ path('comment.report', {id: comment.id}) }}" data-commentid="{{ comment.id }}" class="btn btn-danger report">Signaler ce commentaire</a>
+
+                        {% endif %}
+
+                        {% if is_granted('ROLE_ADMIN') %}
+
+                            <a href="{{ path('admin.comment.edit', {id: comment.id}) }}" class="btn btn-info">Modèrer</a>
+
+                        {% endif %}
+                        </div>
+
                     </div>
 
                 {% endfor %}

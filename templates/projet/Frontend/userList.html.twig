@@ -1,0 +1,37 @@
+{# templates/projet/Frontend/userList.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Liste des utilisateurs {% endblock %}
+
+
+{% block body %}
+
+    {% if app.user %}
+
+        <table class="mt-5">
+            <tr>
+                <th>Utilisateur</th>
+                <th>Contact</th>
+                <th>Profil</th>
+
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td><a class="" href="{{ path('private.message', {id : user.id}) }}">Envoyer un message privé</a></td>
+                    <td><a class="" href="{{ path('home.index') }}">Afficher le profil</a></td>
+                </tr>
+
+            {% endfor %}
+
+
+        </table>
+
+    {% else %}
+
+        <h2 class="m-5 text-center">Veuillez vous connecter pour accèder à la liste des membres !</h2>
+
+    {% endif %}
+
+{% endblock %}

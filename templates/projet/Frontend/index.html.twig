@@ -7,28 +7,46 @@
 
 {% block body %}
 
-        <h1 class="m-3 text-center">Posts les mieux votés :</h1>
-
-
-        <h1 class="m-3 text-center">Posts les plus récents :</h1>
-        <div class="row flew">
-        {% for post in posts %}
-            <div class="col-lg-3">
+    <h1 class="m-5 text-center">Posts les mieux votés :</h1>
+    <div class="row flew">
+        {% for post in votedPosts %}
+            <div class="col-lg-3 col-md-3 col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <div><img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" class="card-img-top" alt=""></div>
-                        <h3 class="card-title">{{ post.title }}</h3>
-                        <p>Écrit par {{ post.author.username }}</p>
-                        <p>{{ post.content }}</p>
-                        <a href="{{ path('post.view', {id: post.id}) }}" class="card-link">Voir le post</a>
+                        <img src="media/cache/thumb/images/main/{{ post.post.mainfile }}" class="card-img-top" alt="">
+                        <h4 class="card-title post-title">{{ post.post.title }}</h4>
+                        <p class="post-username">Post aimé par {{ post.nbVotes }} personne(s).</p>
+                        <div class="text-right">
+                            <a href="{{ path('post.view', {id: post.post.id}) }}" class="card-link ">Voir le post</a>
+                        </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
-        </div>
+    </div>
 
 
-    <div class="navigation">
+
+    <h1 class="m-5 text-center">Posts les plus récents :</h1>
+    <div class="row flew">
+        {% for post in posts %}
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" class="card-img-top" alt="">
+                        <h4 class="card-title post-title">{{ post.title }}</h4>
+                        <p class="post-username">Écrit par {{ post.author.username }}</p>
+                        <div class="text-right">
+                            <a href="{{ path('post.view', {id: post.id}) }}" class="card-link ">Voir le post</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <div class="navigation d-flex justify-content-center m-3">
         {{ knp_pagination_render(posts) }}
     </div>
 

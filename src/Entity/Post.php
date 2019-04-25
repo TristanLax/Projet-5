@@ -90,6 +90,11 @@ class Post
      */
     private $votes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PostReports", mappedBy="post", orphanRemoval=true)
+     */
+    private $reports;
+
     
     
     public function __construct()
@@ -98,6 +103,7 @@ class Post
         $this->pictures = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -311,6 +317,37 @@ class Post
             // set the owning side to null (unless already changed)
             if ($vote->getPost() === $this) {
                 $vote->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PostReports[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(PostReports $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(PostReports $report): self
+    {
+        if ($this->reports->contains($report)) {
+            $this->reports->removeElement($report);
+            // set the owning side to null (unless already changed)
+            if ($report->getPost() === $this) {
+                $report->setPost(null);
             }
         }
 

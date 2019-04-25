@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Entity\PostReports;
+use App\Entity\PostVotes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +20,32 @@ class PostRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Post::class);
+    }
+
+
+    public function countVotes()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin(PostVotes::class, 'pv', Join::WITH, 'pv.post = p.id')
+            ->select('COUNT(p.id) AS nbVotes', 'p AS post')
+            ->groupBy('p.id')
+            ->orderBy('nbVotes', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+
+
+    }
+
+    public function countReports()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin(PostReports::class, 'pr', JOIN::WITH, 'pr.post = p.id')
+            ->select('COUNT(p.id) AS nbReport ', 'p AS post')
+            ->groupBy('p.id')
+            ->orderBy('nbReport', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

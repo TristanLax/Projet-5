@@ -1,0 +1,59 @@
+{# templates/projet/Backend/profilMessages.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Messages Privés {% endblock %}
+
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h5 class="text-center m-3">Accèder à :</h5>
+            <p class="link">
+                <a href="{{ path('profil.index') }}" class="btn btn-primary m-1">Votre profil</a>
+                <a href="{{ path('profil.postIndex') }}" class="btn btn-primary m-1">Vos posts</a>
+            </p>
+
+        </div>
+    </div>
+
+
+    <h2>Voir vos messages :</h2>
+
+    <h3>Messages reçus :</h3>
+    <div class="row flew">
+        {% for message in posted %}
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Message envoyé à : {{ message.receiver.username }}</h4>
+                        <h4 class="card-title">{{ message.title }}</h4>
+                        <p>{{ (message.content|length > 200 ? message.content|slice(0, 200) ~ '...' : message.content)|raw }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <h3>Messages écrits :</h3>
+    <div class="row flew">
+    {% for message in received %}
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Message reçu de : {{ message.sender.username }}</h4>
+                <h4 class="card-title">{{ message.title }}</h4>
+                <p>{{ (message.content|length > 200 ? message.content|slice(0, 200) ~ '...' : message.content)|raw }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+
+
+{% endblock %}

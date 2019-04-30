@@ -1,0 +1,49 @@
+{# templates/projet/Backend/postModeration.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Editer {% endblock %}
+
+
+{% block body %}
+
+
+    <h2>Editer le post :</h2>
+    <div>
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-lg-12">{{ form_row(form.title) }}</div>
+            <div class="col-lg-12">{{ form_row(form.content) }}</div>
+            <div class="col-lg-12">{{ form_row(form.mainImage) }}</div>
+            <div class="col-lg-12">{{ form_row(form.pictureFiles) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">{{ form_row(form.mainImage) }}</div>
+
+        </div>
+
+
+        {{ form_widget(form) }}
+        <button class="btn btn-secondary">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+
+    <div class="row flex justify-content-start flex-wrap">
+        {% for picture in post.pictures %}
+            <div class="col">
+                <img src="{{ vich_uploader_asset(picture, 'imageFile') }}" width="20%" alt="">
+                <form method="post" action="{{ path('admin.picture.delete', {id: picture.id}) }}" style="display: inline-block" onsubmit="return confirm('Voulez vous vraiment supprimer ?')">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ picture.id) }}">
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+
+{% endblock %}

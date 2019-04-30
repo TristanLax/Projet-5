@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Post;
 use App\Entity\PostReports;
 use App\Entity\PostVotes;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -44,6 +45,18 @@ class PostRepository extends ServiceEntityRepository
             ->select('COUNT(p.id) AS nbReport ', 'p AS post')
             ->groupBy('p.id')
             ->orderBy('nbReport', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countPosts($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin(User::class, 'u', JOIN::WITH, 'u.id = p.author')
+            ->select('COUNT(p.author) AS nbPosts')
+            ->andWhere('u.id = (:user)')
+            ->setParameter(':user', $user)
+            ->groupBy('p.author')
             ->getQuery()
             ->getResult();
     }

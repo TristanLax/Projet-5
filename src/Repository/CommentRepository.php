@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Entity\CommentReports;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -28,6 +29,18 @@ class CommentRepository extends ServiceEntityRepository
             ->select('COUNT(c.id) AS nbReport ', 'c AS comment')
             ->groupBy('c.id')
             ->orderBy('nbReport', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countComments($user)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin(User::class, 'u', JOIN::WITH, 'u.id = c.author')
+            ->select('COUNT(c.author) AS nbComments')
+            ->andWhere('u.id = (:user)')
+            ->setParameter(':user', $user)
+            ->groupBy('c.author')
             ->getQuery()
             ->getResult();
     }

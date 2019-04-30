@@ -32,6 +32,11 @@ body
     padding: 0;
 }
 
+.new-post
+{
+    margin-top: 20px;
+}
+
 .card
 {
     margin: 10px;
@@ -75,6 +80,12 @@ body
     max-width: 100%;
 }
 
+.create-comment
+{
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
 .comment
 {
     background-color: #f7f0e5;
@@ -84,14 +95,66 @@ body
     border-radius: 6px;
 }
 
+.comment-author
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.comment-image
+{
+    margin: 0 0 10px 10px;
+}
+
 .comment-text
 {
     margin-top: 10px;
 }
 
+.comment-date
+{
+    margin: 0 0 10px 10px;
+    color: rgba(0,0,0,0.6);
+}
+
 .button-replacement
 {
     margin: 16px;
+}
+
+.change-password
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.avatar-change
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.message-button
+{
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 5px;
+}
+
+.user-name
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.user-avatar
+{
+    margin-bottom: 50px;
+}
+
+.user-pm
+{
+    margin-top: 50px;
 }
 
 th
@@ -105,6 +168,7 @@ td
     border: 2px solid black;
     padding: 5px;
 }
+
 
 
 

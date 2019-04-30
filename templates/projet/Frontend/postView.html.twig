@@ -11,46 +11,17 @@
         <div class="row">
             <div class="col-lg-12 text-center">
 
-                <h3 class="m-3">Posté par {{ post.author.username }}</h3>
-
-                {% if vote == false and app.user %}
-
-                    <a href="{{ path('post.vote', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-warning vote m-3">Voter pour ce post</a>
-
-                {% elseif vote == true %}
-
-                    <a href="{{ path('post.unvote', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-warning unvote m-3">Annuler mon vote</a>
-
-                {% else %}
-
-                    <h5 class="m-3">Veuillez vous connecter pour pouvoir intéragir avec ce post !</h5>
-
-                {% endif %}
-
-                {% if postReport == false and app.user %}
-
-                    <a href="{{ path('post.report', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-danger postReport m-3">Signaler ce post</a>
-
-                {% else %}
-
-                    <a href="{{ path('post.report.remove', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-danger removeReport m-3">Retirer mon signalement</a>
-
-                {% endif  %}
-
-
-                {% if is_granted('ROLE_ADMIN') %}
-
-                    <a href="{{ path('admin.post.edit', {id: post.id}) }}" class="btn btn-info m-3">Modèrer</a>
-
-                {% endif %}
+                <h3 class="m-3">{{ post.title }}, posté par <a class="" href="{{ path('public.profil.index', {id: post.author.id}) }}">{{ post.author.username }}</a></h3>
+                <br/>
+                <p>Sujet ouvert a {{ post.addDate|date('H:i') }} le {{ post.addDate|date('d:m:Y') }}</p>
 
                 <div class="col-lg-12">
                     <img src="{{ vich_uploader_asset(post, 'mainImage') }}" class="mainimage" alt="">
                 </div>
-                <h3 class="m-3">{{ post.title }}</h3>
                 <div class="col-lg-12 maintext">{{ post.content | raw }}</div>
 
                 <div class="col-lg-12">
+
                     <div class="row flex justify-content-start flex-wrap">
                         {% for picture in post.pictures %}
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -58,6 +29,41 @@
                             </div>
                         {% endfor %}
                     </div>
+
+                    <div class="">
+                    {% if vote == false and app.user %}
+
+                        <a href="{{ path('post.vote', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-warning vote m-3">Voter pour ce post</a>
+
+                    {% elseif vote == true %}
+
+                        <a href="{{ path('post.unvote', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-warning unvote m-3">Annuler mon vote</a>
+
+                    {% else %}
+
+                        <h5 class="m-3">Veuillez vous connecter pour pouvoir intéragir avec ce post !</h5>
+
+                    {% endif %}
+
+                    {% if postReport == false and app.user %}
+
+                        <a href="{{ path('post.report', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-danger postReport m-3">Signaler ce post</a>
+
+                    {% elseif postReport == true and app.user %}
+
+                        <a href="{{ path('post.report.remove', {id: post.id}) }}" data-postid="{{ post.id }}" class="btn btn-danger removeReport m-3">Retirer mon signalement</a>
+
+
+                    {% endif  %}
+
+
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                        <a href="{{ path('admin.post.edit', {id: post.id}) }}" class="btn btn-info m-3">Modèrer</a>
+
+                    {% endif %}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -65,7 +71,7 @@
             <div class="row">
             <div class="col-lg-12">
                 {% if app.user %}
-                <div class="d-flex justify-content-center m-5">
+                <div class="col-lg-10 offset-lg-1 create-comment">
                  <a class="btn btn-primary" href="{{ path('comment.add', {id: post.id}) }}">Ecrire un commentaire</a>
                 </div>
                 {% endif %}
@@ -75,9 +81,26 @@
                     <div class="col-lg-10 offset-lg-1">
 
                         <div class="col-lg-12 comment">
-                            <div>{{ comment.commentDate|date('d-m-Y H:i') }}</div>
-                        <div class="comment-text"><p>{{ comment.content | raw }}</p></div>
-                        <div class="text-right font-italic"><p>Réponse écrite par : {{ comment.author.username }}</p></div>
+                            <div class="row">
+
+                                    <div class="text-left font-italic col-lg-2 comment-author">
+                                        <a class="" href="{{ path('public.profil.index', {id: comment.author.id}) }}">{{ comment.author.username }}</a>
+                                        <div class="row">
+                                            {% if vich_uploader_asset(comment.author, 'imageFile') is null %}
+                                                <img src="{{ asset('images/avatar/defaultAvatar.jpg') }}" class="comment-image" alt>
+                                            {% else %}
+                                                <img src="{{ vich_uploader_asset(comment.author, 'imageFile') | imagine_filter('avatar') }}" class="comment-image" alt="">
+                                            {% endif %}
+                                            <div class="row">
+                                                <div class="col-lg-12 comment-date">{{ comment.commentDate|date('H:i') }} le {{ comment.commentDate|date('d:m:Y') }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment-text col-lg-10">
+                                        <p>{{ comment.content | raw }}</p>
+                                    </div>
+
+                            </div>
                         </div>
 
                         <div class="text-right">

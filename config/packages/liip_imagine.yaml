@@ -1,11 +1,18 @@
 liip_imagine:
     filter_sets:
         thumb:
-            quality:          85
+            quality: 85
             filters:
                 thumbnail:
-                    size:          [360, 230]
-                    mode:          outbound
+                    size: [360, 230]
+                    mode: outbound
+
+        avatar:
+            quality: 85
+            filters:
+                thumbnail:
+                    size: [150, 150]
+                    mode: inset
 
 
 

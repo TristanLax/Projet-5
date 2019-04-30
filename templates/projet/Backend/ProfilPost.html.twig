@@ -37,7 +37,7 @@
                         <img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" class="card-img-top" alt="">
                         <h4><a href="{{ path('post.view', {id: post.id}) }}" class="card-link">{{ post.title }}</a></h4>
                         <p class=""> {{ (post.content|length > 60 ? post.content|slice(0, 60) ~ '...' : post.content)|striptags }}</p>
-                        <a href="{{ path('admin.post.edit', {id: post.id}) }}" class="btn btn-primary">Editer</a>
+                        <a href="{{ path('profil.post.edit', {id: post.id}) }}" class="btn btn-primary">Editer</a>
                     </div>
                 </div>
             </div>

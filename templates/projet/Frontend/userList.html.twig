@@ -20,7 +20,7 @@
                 <tr>
                     <td>{{ user.username }}</td>
                     <td><a class="" href="{{ path('private.message', {id : user.id}) }}">Envoyer un message privé</a></td>
-                    <td><a class="" href="{{ path('home.index') }}">Afficher le profil</a></td>
+                    <td><a class="" href="{{ path('public.profil.index', {id: user.id}) }}">Afficher le profil</a></td>
                 </tr>
 
             {% endfor %}

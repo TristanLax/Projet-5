@@ -16,7 +16,8 @@ class UserAvatarType extends AbstractType
     {
         $builder
             ->add('imageFile', FileType::class, [
-                'required' => false
+                'required' => false,
+                'label' => 'Nouvel avatar :'
             ]);
     }
 

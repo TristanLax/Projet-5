@@ -52,8 +52,6 @@ class IndexController extends AbstractController
             $request->query->getInt('page', 1),
             6);
 
-        dump($bestVotes);
-
         return $this->render('projet/Frontend/index.html.twig', ['posts' => $posts, 'votedPosts' => $bestVotes]);
     }
 

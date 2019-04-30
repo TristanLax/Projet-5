@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Controller\Backend;
+namespace App\Controller\Backend\Admin;
 
 use App\Entity\Comment;
 use App\Form\CommentType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CommentController extends AbstractController
+class AdminCommentController extends AbstractController
 {
+
     /**
      * @var ObjectManager
      */
     private $em;
+
 
     public function __construct(ObjectManager $em)
     {
@@ -25,7 +28,6 @@ class CommentController extends AbstractController
     /**
      * @Route("/admin/comment/{id}", name="admin.comment.edit", methods="GET|POST")
      */
-
     public function edit(comment $comment, Request $request)
     {
         $form = $this->createForm(CommentType::class, $comment);
@@ -39,19 +41,14 @@ class CommentController extends AbstractController
         return $this->render('projet/Backend/commentEdit.html.twig', ['comment' => $comment, 'form' => $form->CreateView()]);
     }
 
-
     /**
-     * @Route("/admin/comment/{id}", name="admin.comment.delete", methods="DELETE")
+     * @Route("/admin/comment/delete/{id}", name="admin.comment.delete")
      */
-    public function delete(comment $comment, Request $request)
+    public function delete(comment $comment)
     {
-        if($this->isCsrfTokenValid('delete' . $comment->getId(), $request->get('_token') )) {
-            $this->em->remove($comment);
-            $this->em->flush($comment);
-            $this->addFlash('success', 'Message supprimé avec succès !');
-        }
+        $this->em->remove($comment);
+        $this->em->flush();
 
-        return $this->redirectToRoute('admin.index');
-
+        return new JsonResponse(['data' => []]);
     }
 }

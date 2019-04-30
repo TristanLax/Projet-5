@@ -15,12 +15,13 @@ class ResetPasswordType extends AbstractType
     {
         $builder
             ->add('oldPassword', PasswordType::class, array(
-                'mapped' => false
+                'mapped' => false,
+                'label' => 'Ancien mot de passe :'
             ))
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => array('label' => 'Mot de passe'),
-                'second_options' => array('label' => 'Confirmation du mot de passe'),
+                'first_options' => array('label' => 'Mot de passe :'),
+                'second_options' => array('label' => 'Confirmation du mot de passe :'),
             ]);
     }
 

@@ -118,3 +118,29 @@ $("#confirmer").on("click", function(){
     });
     $("#deletePost").modal('hide');
 });
+
+
+$('#deleteComment').on('show.bs.modal', function (event) {
+
+    var button = $(event.relatedTarget);
+    var commentId = button.data('commentid');
+    var modal = $(this);
+
+    modal.find('.modal-title').append();
+    modal.find('#modal-comment-id').val(commentId);
+});
+
+
+$("#confirmer-comment").on("click", function(){
+
+    var id = $('#deleteComment').find('#modal-comment-id').val();
+
+    $.ajax({
+        url : '/admin/comment/delete/' + id,
+        type : 'POST',
+        success : function(){
+            $('.comment_'+ id).remove();
+        },
+    });
+    $("#deleteComment").modal('hide');
+});

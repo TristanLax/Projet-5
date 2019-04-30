@@ -3,17 +3,17 @@
 namespace App\Controller\Frontend;
 
 
-use App\Form\PrivateMessageType;
-use App\Repository\UserRepository;
 use App\Entity\User;
-use App\Entity\Message;
+use App\Repository\CommentRepository;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ListeController extends AbstractController
+class FrontProfilController extends AbstractController
 {
 
     /**
@@ -26,10 +26,23 @@ class ListeController extends AbstractController
      */
     private $em;
 
+    /**
+     * @var PostRepository
+     */
+    private $repository;
 
-    public function __construct(UserRepository $userRepository, ObjectManager $em)
+
+    /**
+     * @var CommentRepository
+     */
+    private $cr;
+
+
+    public function __construct(PostRepository $repository, CommentRepository $cr, UserRepository $userRepository, ObjectManager $em)
     {
         $this->userRepository = $userRepository;
+        $this->repository = $repository;
+        $this->cr = $cr;
         $this->em = $em;
     }
 
@@ -47,26 +60,14 @@ class ListeController extends AbstractController
     }
 
     /**
-     * @Route ("profil/private/{id}", name="private.message")
+     * @Route("/memberProfil/{id}", name="public.profil.index")
      */
-    public function privateMessage(User $user, Request $request)
+    public function profilIndex(User $user)
     {
-        $message = new Message();
-        $sender = $this->getUser();
-        $receiver = $user;
+        $numberComments = $this->cr->countComments($user);
+        $numberPosts = $this->repository->countPosts($user);
 
-        $form = $this->createForm(PrivateMessageType::class, $message);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $message->setSender($sender);
-            $message->setReceiver($receiver);
-            $this->em->persist($message);
-            $this->em->flush();
-            return $this->redirectToRoute('liste.index');
-        }
-
-        return $this->render("projet/Frontend/PrivateMessage.html.twig", ['form' => $form->CreateView()]);
-
+        return $this->render('projet/Frontend/PublicProfil.html.twig', ['user' => $user, 'comments' => $numberComments, 'posts' => $numberPosts]);
     }
+
 }

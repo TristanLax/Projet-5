@@ -1,0 +1,16 @@
+{# templates/bundles/TwigBundle/Exception/error.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Page introuvable  {% endblock %}
+
+
+{% block body %}
+
+    <h1 class="post-main text-center">Page introuvable !</h1>
+
+    <p>
+        La page que vous avez cherché est actuellement introuvable ! Vérifiez l'URL ou retournez sur la page <a href="{{ path('home.index') }}">d'accueil</a>.
+    </p>
+
+{% endblock %}

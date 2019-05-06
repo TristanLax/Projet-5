@@ -34,7 +34,7 @@ class AdminPostController extends AbstractController
 
 
     /**
-     * @Route("/admin/post/{id}", name="admin.post.edit", methods="GET|POST")
+     * @Route("/admin/postModeration/{id}", name="admin.post.edit", methods="GET|POST")
      */
     public function edit(Post $post, Request $request)
     {
@@ -46,7 +46,7 @@ class AdminPostController extends AbstractController
             $this->addFlash('success', 'Mise à jour enregistrée !');
             return $this->redirectToRoute('admin.index');
         }
-        return $this->render('projet/Backend/postModeration.html.twig', ['post' => $post, 'form' => $form->CreateView()]);
+        return $this->render('projet/Backend/Admin/PostModerate.html.twig', ['post' => $post, 'form' => $form->CreateView()]);
     }
 
     /**
@@ -61,7 +61,6 @@ class AdminPostController extends AbstractController
 
             $this->addFlash('success', 'Image supprimée avec succès !');
         }
-
         return $this->redirectToRoute('admin.index');
     }
 
@@ -75,5 +74,4 @@ class AdminPostController extends AbstractController
 
         return new JsonResponse(['data' => []]);
     }
-
 }

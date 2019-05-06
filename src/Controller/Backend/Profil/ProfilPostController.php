@@ -36,7 +36,7 @@ class ProfilPostController extends AbstractController
 
 
     /**
-     * @Route("/profil/sujets", name="profil.postIndex")
+     * @Route("/profil/posts", name="profil.postIndex")
      */
     public function postIndex(PaginatorInterface $paginator, Request $request)
     {
@@ -47,10 +47,8 @@ class ProfilPostController extends AbstractController
             $request->query->getInt('page', 1),
             12);
 
-        return $this->render('projet/Backend/ProfilPost.html.twig', ['posts' => $posts,'user' => $user]);
-
+        return $this->render('projet/Backend/Profil/IndexPosts.html.twig', ['posts' => $posts,'user' => $user]);
     }
-
 
     /**
      * @Route("/profil/post/create", name="user.post.add")
@@ -70,10 +68,8 @@ class ProfilPostController extends AbstractController
 
             return $this->redirectToRoute('profil.postIndex');
         }
-
-        return $this->render('projet/Backend/add.html.twig', ['Post' => $post, 'form' => $form->CreateView()]);
+        return $this->render('projet/Backend/Profil/PostAdd.html.twig', ['Post' => $post, 'form' => $form->CreateView()]);
     }
-
 
     /**
      * @Route("/profil/post/{id}", name="profil.post.edit", methods="GET|POST")
@@ -88,7 +84,7 @@ class ProfilPostController extends AbstractController
             $this->addFlash('success', 'Mise à jour enregistrée !');
             return $this->redirectToRoute('profil.postIndex');
         }
-        return $this->render('projet/Backend/edit.html.twig', ['post' => $post, 'form' => $form->CreateView()]);
+        return $this->render('projet/Backend/Profil/PostEdit.html.twig', ['post' => $post, 'form' => $form->CreateView()]);
     }
 
     /**
@@ -103,10 +99,6 @@ class ProfilPostController extends AbstractController
 
             $this->addFlash('success', 'Image supprimée avec succès !');
         }
-
         return $this->redirectToRoute('profil.postIndex');
     }
-
-
-
 }

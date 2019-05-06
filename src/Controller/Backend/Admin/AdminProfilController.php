@@ -29,6 +29,7 @@ class AdminProfilController extends AbstractController
         $this->em = $em;
     }
 
+
     /**
      * @Route("/admin/banUser/{id}", name="admin.banUser")
      */
@@ -39,5 +40,4 @@ class AdminProfilController extends AbstractController
 
         return new JsonResponse(['data' => []]);
     }
-
 }

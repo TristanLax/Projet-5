@@ -55,7 +55,6 @@ class AdminController extends AbstractController
             $request->query->getInt('page', 1),
             6);
 
-        return $this->render('projet/Backend/admin.html.twig', ['user' => $user, 'reportedPosts' => $reportedPosts, 'reportedComments' => $reportedComments]);
+        return $this->render('projet/Backend/Admin/IndexAdmin.html.twig', ['user' => $user, 'reportedPosts' => $reportedPosts, 'reportedComments' => $reportedComments]);
     }
-
 }

@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class FrontPostController extends AbstractController {
-
+class FrontPostController extends AbstractController
+{
 
     /**
      * @var CommentRepository
@@ -52,6 +52,7 @@ class FrontPostController extends AbstractController {
         $this->em = $em;
     }
 
+
     /**
      * @Route("/post/{id}", name="post.view")
      */
@@ -82,9 +83,7 @@ class FrontPostController extends AbstractController {
         foreach($reports as $report) {
             $isSignaled[] = $report->getComment()->getId();
         }
-
         return $this->render('projet/Frontend/postView.html.twig', ['post' => $post, 'vote' => $vote, 'postReport' => $postReport, 'signalements' => $isSignaled]);
-
     }
 
     /**
@@ -92,7 +91,6 @@ class FrontPostController extends AbstractController {
      */
     public function Report(Post $post)
     {
-
         $report = new PostReports();
         $user = $this->getUser();
 
@@ -103,7 +101,6 @@ class FrontPostController extends AbstractController {
         $this->em->flush();
 
         return new JsonResponse(['data' => []]);
-
     }
 
     /**
@@ -111,7 +108,6 @@ class FrontPostController extends AbstractController {
      */
     public function removeReport(Post $post)
     {
-
         $user = $this->getUser();
 
         $report = $this->prr->findOneBy([
@@ -123,7 +119,6 @@ class FrontPostController extends AbstractController {
         $this->em->flush();
 
         return new JsonResponse(['data' => []]);
-
     }
 
     /**
@@ -131,7 +126,6 @@ class FrontPostController extends AbstractController {
      */
     public function Vote(Post $post)
     {
-
         $vote = new PostVotes();
         $user = $this->getUser();
 
@@ -142,7 +136,6 @@ class FrontPostController extends AbstractController {
         $this->em->flush();
 
         return new JsonResponse(['data' => []]);
-
     }
 
     /**
@@ -150,7 +143,6 @@ class FrontPostController extends AbstractController {
      */
     public function Unvote(Post $post)
     {
-
         $user = $this->getUser();
 
         $vote = $this->vr->findOneBy([
@@ -162,6 +154,5 @@ class FrontPostController extends AbstractController {
         $this->em->flush();
 
         return new JsonResponse(['data' => []]);
-
     }
 }

@@ -14,7 +14,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ProfilController extends AbstractController
 {
 
-
     /**
      * @var ObjectManager
      */
@@ -32,6 +31,7 @@ class ProfilController extends AbstractController
         $this->em = $em;
     }
 
+
     /**
      * @Route("/profil", name="profil.index")
      */
@@ -45,10 +45,8 @@ class ProfilController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
         }
-
-        return $this->render('projet/Backend/profil.html.twig', ['user' => $user, 'form' => $form->CreateView()]);
+        return $this->render('projet/Backend/Profil/IndexProfil.html.twig', ['user' => $user, 'form' => $form->CreateView()]);
     }
-
 
     /**
      * @Route("/profil/passwordChange", name="profil.passwordEdit")
@@ -58,7 +56,6 @@ class ProfilController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
-
 
         if($form->isSubmitted() && $form->isValid()) {
 
@@ -71,10 +68,7 @@ class ProfilController extends AbstractController
                 $this->em->persist($user);
                 $this->em->flush();
             }
-
         }
-
-        return $this->render('projet/Backend/profilPassword.html.twig', ['user' => $user, 'form' => $form->CreateView()]);
+        return $this->render('projet/Backend/Profil/PasswordReset.html.twig', ['user' => $user, 'form' => $form->CreateView()]);
     }
-
 }

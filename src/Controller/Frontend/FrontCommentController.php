@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class FrontCommentController extends AbstractController {
-
+class FrontCommentController extends AbstractController
+{
 
     /**
      * @var CommentRepository
@@ -41,12 +41,12 @@ class FrontCommentController extends AbstractController {
         $this->em = $em;
     }
 
+
     /**
-     * @Route("/post/{id}/addComment", name="comment.add")
+     * @Route("/post/{id}/newReply", name="comment.add")
      */
     public function add(Post $post, Request $request)
     {
-
         $comment = new Comment();
         $user = $this->getUser();
         $form = $this->createForm(CommentType::class, $comment);
@@ -60,9 +60,7 @@ class FrontCommentController extends AbstractController {
 
             return $this->redirectToRoute('post.view', array('id' =>$post->getId()) );
         }
-
-        return $this->render('projet/Frontend/addComment.html.twig', ['post' => $post, 'form' => $form->CreateView()]);
-
+        return $this->render('projet/Frontend/CommentAdd.html.twig', ['post' => $post, 'form' => $form->CreateView()]);
     }
 
     /**
@@ -70,7 +68,6 @@ class FrontCommentController extends AbstractController {
      */
     public function Report(Comment $comment)
     {
-
         $report = new CommentReports();
         $user = $this->getUser();
 
@@ -81,7 +78,6 @@ class FrontCommentController extends AbstractController {
         $this->em->flush();
 
         return new JsonResponse(['data' => []]);
-
     }
 
     /**
@@ -89,20 +85,16 @@ class FrontCommentController extends AbstractController {
      */
     public function Unreport(Comment $comment)
     {
-
         $user = $this->getUser();
 
         $report = $this->rr->findOneBy([
             'user' => $user,
             'comment' => $comment,
         ]);
-
         $this->em->remove($report);
         $this->em->flush();
 
         return new JsonResponse(['data' => []]);
 
     }
-
-
 }

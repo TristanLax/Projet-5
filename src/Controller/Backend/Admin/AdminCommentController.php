@@ -26,7 +26,7 @@ class AdminCommentController extends AbstractController
 
 
     /**
-     * @Route("/admin/comment/{id}", name="admin.comment.edit", methods="GET|POST")
+     * @Route("/admin/commentModeration/{id}", name="admin.comment.edit", methods="GET|POST")
      */
     public function edit(comment $comment, Request $request)
     {
@@ -38,7 +38,7 @@ class AdminCommentController extends AbstractController
             $this->addFlash('success', 'Mise à jour enregistrée !');
             return $this->redirectToRoute('admin.index');
         }
-        return $this->render('projet/Backend/commentEdit.html.twig', ['comment' => $comment, 'form' => $form->CreateView()]);
+        return $this->render('projet/Backend/Admin/CommentModerate.html.twig', ['comment' => $comment, 'form' => $form->CreateView()]);
     }
 
     /**

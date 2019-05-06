@@ -46,6 +46,7 @@ class FrontProfilController extends AbstractController
         $this->em = $em;
     }
 
+
     /**
      * @Route("/userlist", name="liste.index")
      */
@@ -69,5 +70,4 @@ class FrontProfilController extends AbstractController
 
         return $this->render('projet/Frontend/PublicProfil.html.twig', ['user' => $user, 'comments' => $numberComments, 'posts' => $numberPosts]);
     }
-
 }

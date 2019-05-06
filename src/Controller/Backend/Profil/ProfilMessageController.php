@@ -16,7 +16,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 class ProfilMessageController extends AbstractController
 {
 
-
     /**
      * @var ObjectManager
      */
@@ -34,8 +33,9 @@ class ProfilMessageController extends AbstractController
         $this->em = $em;
     }
 
+
     /**
-     * @Route("/profil/comments", name="profil.messageIndex")
+     * @Route("/profil/messages", name="profil.messageIndex")
      */
     public function MessageIndex(PaginatorInterface $paginator, Request $request)
     {
@@ -52,7 +52,7 @@ class ProfilMessageController extends AbstractController
             $request->query->getInt('page', 1),
             3);
 
-        return $this->render('projet/Backend/ProfilMessages.html.twig', ['received' => $receivedMessages, 'posted' => $postedMessages ,'user' => $user]);
+        return $this->render('projet/Backend/Profil/IndexMessages.html.twig', ['received' => $receivedMessages, 'posted' => $postedMessages ,'user' => $user]);
     }
 
     /**
@@ -77,5 +77,4 @@ class ProfilMessageController extends AbstractController
 
         return $this->render("projet/Frontend/PrivateMessage.html.twig", ['user' => $user, 'form' => $form->CreateView()]);
     }
-
 }

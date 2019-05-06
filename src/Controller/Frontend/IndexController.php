@@ -29,7 +29,6 @@ class IndexController extends AbstractController
      */
     private $em;
 
-    
         
     public function __construct(PostRepository $repository, PostVotesRepository $vr, ObjectManager $em)
     {
@@ -44,9 +43,7 @@ class IndexController extends AbstractController
      */
         public function index(PaginatorInterface $paginator, Request $request)
     {
-
         $bestVotes = $this->repository->countVotes();
-
         $posts = $paginator->paginate(
             $this->repository->findAll(),
             $request->query->getInt('page', 1),
@@ -54,5 +51,4 @@ class IndexController extends AbstractController
 
         return $this->render('projet/Frontend/index.html.twig', ['posts' => $posts, 'votedPosts' => $bestVotes]);
     }
-
 }

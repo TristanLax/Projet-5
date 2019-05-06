@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
-class SecurityController extends AbstractController{
-
+class SecurityController extends AbstractController
+{
 
     /**
      * @var ObjectManager
@@ -39,6 +39,7 @@ class SecurityController extends AbstractController{
         $this->email = $email;
     }
 
+
     /**
      * @Route("/login", name="login")
      */
@@ -55,7 +56,6 @@ class SecurityController extends AbstractController{
      */
     public function newUser(Request $request)
     {
-        {
             $user = new User();
             $form = $this->createForm(UserType::class, $user);
             $form->handleRequest($request);
@@ -68,12 +68,7 @@ class SecurityController extends AbstractController{
                 $this->email->SendMail($user);
 
                 return $this->redirectToRoute('login');
-
             }
-
             return $this->render('projet/Security/create.html.twig', ['User' => $user, 'form' => $form->CreateView()]);
-
-        }
     }
-
 }

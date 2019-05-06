@@ -75,7 +75,7 @@ class ProfilMessageController extends AbstractController
             return $this->redirectToRoute('liste.index');
         }
 
-        return $this->render("projet/Frontend/PrivateMessage.html.twig", ['form' => $form->CreateView()]);
+        return $this->render("projet/Frontend/PrivateMessage.html.twig", ['user' => $user, 'form' => $form->CreateView()]);
     }
 
 }

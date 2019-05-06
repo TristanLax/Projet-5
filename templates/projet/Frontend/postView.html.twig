@@ -92,7 +92,7 @@
                                                 <img src="{{ vich_uploader_asset(comment.author, 'imageFile') | imagine_filter('avatar') }}" class="comment-image" alt="">
                                             {% endif %}
                                             <div class="row">
-                                                <div class="col-lg-12 comment-date">{{ comment.commentDate|date('H:i') }} le {{ comment.commentDate|date('d:m:Y') }}</div>
+                                                <div class="col-lg-12 comment-date">{{ comment.commentDate|date('H:i') }} le {{ comment.commentDate|date('d-m-Y') }}</div>
                                             </div>
                                         </div>
                                     </div>

@@ -61,7 +61,7 @@ class FrontCommentController extends AbstractController {
             return $this->redirectToRoute('post.view', array('id' =>$post->getId()) );
         }
 
-        return $this->render('projet/Frontend/addComment.html.twig', ['form' => $form->CreateView()]);
+        return $this->render('projet/Frontend/addComment.html.twig', ['post' => $post, 'form' => $form->CreateView()]);
 
     }
 

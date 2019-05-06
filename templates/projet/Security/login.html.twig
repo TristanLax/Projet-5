@@ -13,26 +13,27 @@
 
 
         <div class="container mt-4">
-        <form action="{{ path('login') }}" method="post">
-            <div class="form-group col-lg-6 col-md-6 col-sm-6 offset-lg-3 offset-md-3 offset-sm-3 text-center">
 
-            <label for="username">Nom d'utilisateur</label>
-            <input type="text" id="username" name="_username" class="form-control" value="{{ last_username}}">
+            <h3 class="text-center login-main">Se connecter</h3>
+                <form action="{{ path('login') }}" method="post">
+                    <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2 text-center">
 
-            </div>
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="_username" class="form-control" value="{{ last_username}}">
 
-            <div class="form-group col-lg-6 col-md-6 col-sm-6 offset-lg-3 offset-md-3 offset-sm-3 text-center">
+                    </div>
 
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="_password" class="form-control">
+                    <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2 text-center">
 
-            </div>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="_password" class="form-control">
 
-            <div class="text-center">
-            <button type="submit" class="btn btn-primary">Se connecter</button>
-            </div>
+                    </div>
 
-        </form>
+                    <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                    </div>
+                </form>
         </div>
 
 

@@ -36,9 +36,9 @@
                 <p>Avatar actuel :</p>
 
                 {% if vich_uploader_asset(user, 'imageFile') is null %}
-                    <img src="{{ asset('images/avatar/defaultAvatar.jpg') }}" class="mainimage" alt="">
+                    <img src="{{ asset('images/avatar/defaultAvatar.jpg') }}" class="" alt="">
                 {% else %}
-                    <img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('avatar') }}" class="mainimage" alt="">
+                    <img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('avatar') }}" class="" alt="">
                 {% endif %}
             </div>
 

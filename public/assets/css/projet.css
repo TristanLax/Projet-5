@@ -141,6 +141,11 @@ body
     margin-bottom: 5px;
 }
 
+.main-margin
+{
+    margin-top: 50px;
+}
+
 .user-name
 {
     margin-top: 20px;
@@ -155,18 +160,25 @@ body
 .user-pm
 {
     margin-top: 50px;
+    margin-bottom: 20px;
 }
 
-th
+.login-main
 {
-    border: 2px solid black;
-    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-td
+.comment-main
 {
-    border: 2px solid black;
-    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.post-main
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 
@@ -179,6 +191,11 @@ td
         width: 80%;
     }
 
+    .main-margin
+    {
+        margin-top: 40px;
+    }
+
 }
 
 
@@ -187,6 +204,11 @@ td
     .secondary-img
     {
         width: 80%;
+    }
+
+    .main-margin
+    {
+        margin-top: 30px;
     }
 }
 
@@ -202,6 +224,11 @@ all and (max-device-width: 480px)
     .secondary-img
     {
         width: 80%;
+    }
+
+    .main-margin
+    {
+        margin-top: 20px;
     }
 
 }

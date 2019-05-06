@@ -7,23 +7,25 @@
 
 {% block body %}
 
-        
-        <h2>Ecrire un post :</h2>
-        <div>
-            {{ form_start(form) }}
-            
-            <div class="row">
-                <div class="col-lg-12">{{ form_row(form.title) }}</div>
-                <div class="col-lg-12">{{ form_row(form.content) }}</div>
-                <div class="col-lg-12">{{ form_row(form.mainImage) }}</div>
-                <div class="col-lg-12">{{ form_row(form.pictureFiles) }}</div>
-            </div>
+<div class="row">
+    <div class="col-lg-12">
 
-            
-            {{ form_widget(form) }}
+        <h2 class="text-center post-main">Ecrire un post :</h2>
+        {{ form_start(form) }}
+
+            <div class="col-md-12">{{ form_row(form.title) }}</div>
+            <div class="col-md-12">{{ form_row(form.content) }}</div>
+            <div class="col-md-6 offset-md-3">{{ form_row(form.mainImage) }}</div>
+            <div class="col-md-6 offset-md-3">{{ form_row(form.pictureFiles) }}</div>
+
+        {{ form_widget(form) }}
+        <div class="col-lg-12">
             <button class="btn btn-secondary">Enregistrer</button>
-            {{ form_end(form) }}
         </div>
+        {{ form_end(form) }}
+
+    </div>
+</div>
 
 
 

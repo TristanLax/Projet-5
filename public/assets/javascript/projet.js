@@ -144,3 +144,27 @@ $("#confirmer-comment").on("click", function(){
     });
     $("#deleteComment").modal('hide');
 });
+
+$('#banUser').on('show.bs.modal', function (event) {
+
+    var button = $(event.relatedTarget);
+    var userId = button.data('userid');
+    var modal = $(this);
+
+    modal.find('.modal-title').append();
+    modal.find('#modal-user-id').val(userId);
+});
+
+
+$("#confirmer-ban").on("click", function(){
+
+    var id = $('#banUser').find('#modal-user-id').val();
+
+    $.ajax({
+        url : '/admin/banUser/' + id,
+        type : 'POST',
+        success : function(){
+            window.location.replace("/userlist");
+        },
+    });
+});

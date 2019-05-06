@@ -9,29 +9,38 @@
 
     {% if app.user %}
 
-        <table class="mt-5">
-            <tr>
-                <th>Utilisateur</th>
-                <th>Contact</th>
-                <th>Profil</th>
 
+
+    <div class="row">
+        <div class="col-lg-12">
+
+        <h1 class="m-5 text-center">Liste des membres :</h1>
+
+        <table class="table table-sm table-hover table-bordered table-striped text-center">
+            <thead>
+            <tr>
+                <th scope="col">Utilisateur</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Profil</th>
             </tr>
+            </thead>
+            <tbody>
             {% for user in users %}
                 <tr>
                     <td>{{ user.username }}</td>
                     <td><a class="" href="{{ path('private.message', {id : user.id}) }}">Envoyer un message privé</a></td>
                     <td><a class="" href="{{ path('public.profil.index', {id: user.id}) }}">Afficher le profil</a></td>
                 </tr>
-
             {% endfor %}
-
-
+            </tbody>
         </table>
 
     {% else %}
-
         <h2 class="m-5 text-center">Veuillez vous connecter pour accèder à la liste des membres !</h2>
-
     {% endif %}
+
+    </div>
+    </div>
+
 
 {% endblock %}

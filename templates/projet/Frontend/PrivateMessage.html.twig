@@ -8,14 +8,21 @@
 {% block body %}
 
 
-    <h2>Message privé :</h2>
-    <div>
-        {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-12">
 
-        {{ form_widget(form) }}
-        <button class="btn btn-secondary">Enregistrer</button>
-        {{ form_end(form) }}
+            <h2 class="text-center post-main">Message privé pour {{ user.getUsername }}</h2>
+            <div>
+                {{ form_start(form) }}
+
+                {{ form_widget(form) }}
+                <button class="btn btn-primary">Envoyer le message</button>
+                {{ form_end(form) }}
+            </div>
+
+        </div>
     </div>
+
 
 
 

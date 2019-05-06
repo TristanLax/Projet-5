@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <img src="media/cache/thumb/images/main/{{ post.post.mainfile }}" class="card-img-top" alt="">
                         <h4 class="card-title post-title">{{ post.post.title }}</h4>
-                        <p class="post-username">Écrit par {{ post.post.author.username }}</p>
+                        <p class="post-username">Écrit par {{ post.post.author.username }} le {{ post.post.addDate|date('d-m-Y') }}</p>
                         <p class="post-username">Aimé par {{ post.nbVotes }} personne(s).</p>
                         <div class="text-right">
                             <a href="{{ path('post.view', {id: post.post.id}) }}" class="card-link ">Voir le post</a>
@@ -42,7 +42,7 @@
                     <div class="card-body">
                         <img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" class="card-img-top" alt="">
                         <h4 class="card-title post-title">{{ post.title }}</h4>
-                        <p class="post-username">Écrit par {{ post.author.username }}</p>
+                        <p class="post-username">Écrit par {{ post.author.username }} le {{ post.addDate|date('d-m-Y') }}</p>
                         <div class="text-right">
                             <a href="{{ path('post.view', {id: post.id}) }}" class="card-link ">Voir le post</a>
                         </div>

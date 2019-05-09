@@ -18,12 +18,10 @@ class AdminCommentController extends AbstractController
      */
     private $em;
 
-
     public function __construct(ObjectManager $em)
     {
         $this->em = $em;
     }
-
 
     /**
      * @Route("/admin/commentModeration/{id}", name="admin.comment.edit", methods="GET|POST")

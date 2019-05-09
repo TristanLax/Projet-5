@@ -76,7 +76,7 @@
                 </div>
                 {% endif %}
 
-                {% for comment in post.comments %}
+                {% for comment in comments %}
 
                     <div class="col-lg-10 offset-lg-1">
 
@@ -109,9 +109,16 @@
 
                             <a href="{{ path('report.remove', {id: comment.id}) }}" data-commentid="{{ comment.id }}" class="btn btn-danger unreport">Annuler le signalement</a>
 
-                        {% elseif app.user %}
+                        {% elseif app.user != comment.author in comments %}
 
-                            <a href="{{ path('comment.report', {id: comment.id}) }}" data-commentid="{{ comment.id }}" class="btn btn-danger report">Signaler ce commentaire</a>
+                            <a href="{{ path('comment.report', {id: comment.id}) }}" data-commentid="{{ comment.id }}" class="btn btn-danger report">Signaler</a>
+
+                        {% endif %}
+
+                        {% if app.user == comment.author in userComments %}
+
+                                <a href="{{ path('comment.edit', {id: comment.id}) }}" class="btn btn-warning">Editer</a>
+
 
                         {% endif %}
 

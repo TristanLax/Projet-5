@@ -1,0 +1,29 @@
+{# templates/projet/Frontent/CommentEdit.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Editer votre commentaire {% endblock %}
+
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h2 class="text-center comment-main">Editer votre commentaire :</h2>
+            {{ form_start(form) }}
+
+            <div class="col-lg-12">{{ form_row(form.content) }}</div>
+
+            {{ form_widget(form) }}
+            <div class="col-lg-12">
+                <button class="btn btn-secondary">Envoyer le commentaire</button>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

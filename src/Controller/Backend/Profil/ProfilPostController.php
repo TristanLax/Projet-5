@@ -80,6 +80,7 @@ class ProfilPostController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $post->setEditDate(new \DateTime('now'));
             $this->em->flush();
             $this->addFlash('success', 'Mise à jour enregistrée !');
             return $this->redirectToRoute('profil.postIndex');

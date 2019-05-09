@@ -30,7 +30,7 @@
                 <div class="card">
                     <div class="card-body">
                         <img src="{{ vich_uploader_asset(post.post, 'mainImage') | imagine_filter('thumb') }}" class="card-img-top" alt="">
-                        <h4><a href="{{ path('post.view', {id: post.post.id}) }}" class="card-link">{{ post.post.title }}</a></h4>
+                        <h4><a href="{{ path('post.view', {id: post.post.id}) }}" class="card-link">{{ post.post.title|length > 15 ? post.post.title|slice(0, 15) ~ '...' : post.post.title }}</a></h4>
                         <p class="post-username">Écrit par {{ post.post.author.username }}</p>
                         <a href="{{ path('admin.post.edit', {id: post.post.id}) }}" class="btn btn-primary">Modèrer</a>
                         <a href="{{ path('admin.post.delete', {id: post.post.id}) }}" class="btn btn-danger delete" data-toggle="modal" data-target="#deletePost" data-postid="{{ post.post.id }}">Supprimer</a>
@@ -75,7 +75,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Message reporté {{ comment.nbReport }} fois</h5>
-                    <p>{{ comment.comment.content | raw }}</p>
+                    <p>{{ (comment.comment.content|length > 200 ? comment.comment.content|slice(0, 200) ~ '...' : comment.comment.content)|raw }}</p>
                     <a href="{{ path('post.view', {id: comment.comment.post.id}) }}" class="card-link">Voir le post associé</a>
                     <a href="{{ path('admin.comment.edit', {id: comment.comment.id}) }}" class="btn btn-primary">Modèrer</a>
                     <a href="{{ path('admin.comment.delete', {id: comment.comment.id}) }}" class="btn btn-danger delete-comment" data-toggle="modal" data-target="#deleteComment" data-commentid="{{ comment.comment.id }}">Supprimer</a>

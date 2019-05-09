@@ -64,6 +64,24 @@ class FrontCommentController extends AbstractController
     }
 
     /**
+     * @Route("/edit/{id}", name="comment.edit")
+     */
+    public function edit(Comment $comment, Request $request)
+    {
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $comment->setEditDate(new \DateTime('now'));
+            $this->em->persist($comment);
+            $this->em->flush();
+
+            return $this->redirectToRoute('home.index');
+        }
+        return $this->render('projet/Frontend/CommentEdit.html.twig', ['form' => $form->CreateView()]);
+    }
+
+    /**
      * @Route("/report/{id}", name="comment.report")
      */
     public function Report(Comment $comment)

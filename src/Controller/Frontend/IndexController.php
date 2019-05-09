@@ -47,7 +47,7 @@ class IndexController extends AbstractController
         $posts = $paginator->paginate(
             $this->repository->findAll(),
             $request->query->getInt('page', 1),
-            6);
+            8);
 
         return $this->render('projet/Frontend/index.html.twig', ['posts' => $posts, 'votedPosts' => $bestVotes]);
     }

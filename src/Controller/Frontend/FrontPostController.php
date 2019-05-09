@@ -75,6 +75,11 @@ class FrontPostController extends AbstractController
             'post' => $post
         ]);
 
+        $userComments = $this->commentRepository->findBy([
+            'post' => $post,
+            'author' => $user
+        ]);
+
         $reports = $this->rr->findBy([
             'comment' => $comments,
             'user' => $user,
@@ -83,7 +88,8 @@ class FrontPostController extends AbstractController
         foreach($reports as $report) {
             $isSignaled[] = $report->getComment()->getId();
         }
-        return $this->render('projet/Frontend/postView.html.twig', ['post' => $post, 'vote' => $vote, 'postReport' => $postReport, 'signalements' => $isSignaled]);
+
+        return $this->render('projet/Frontend/postView.html.twig', ['post' => $post, 'comments' => $comments, 'userComments' => $userComments, 'vote' => $vote, 'postReport' => $postReport, 'signalements' => $isSignaled]);
     }
 
     /**

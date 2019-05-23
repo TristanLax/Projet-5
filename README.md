@@ -1,2 +1,4 @@
 # Projet-5
-Projet personnel pour la formation Développeur Web Junior
+
+Repository pour le projet 5 de la formation Développeur Web Junior d'OpenClassRooms, "Présentez librement un projet personnel".
+

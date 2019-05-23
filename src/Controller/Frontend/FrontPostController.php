@@ -10,8 +10,10 @@ use App\Repository\CommentRepository;
 use App\Repository\PostReportsRepository;
 use App\Repository\PostVotesRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FrontPostController extends AbstractController
@@ -56,7 +58,7 @@ class FrontPostController extends AbstractController
     /**
      * @Route("/post/{id}", name="post.view")
      */
-    public function postView(Post $post)
+    public function postView(Post $post, PaginatorInterface $paginator, Request $request)
     {
         $isSignaled = [];
         $user = $this->getUser();
@@ -75,6 +77,10 @@ class FrontPostController extends AbstractController
             'post' => $post
         ]);
 
+        $paginatedComments = $paginator->paginate( $comments,
+            $request->query->getInt('page', 1),
+            8);
+
         $userComments = $this->commentRepository->findBy([
             'post' => $post,
             'author' => $user
@@ -89,7 +95,7 @@ class FrontPostController extends AbstractController
             $isSignaled[] = $report->getComment()->getId();
         }
 
-        return $this->render('projet/Frontend/postView.html.twig', ['post' => $post, 'comments' => $comments, 'userComments' => $userComments, 'vote' => $vote, 'postReport' => $postReport, 'signalements' => $isSignaled]);
+        return $this->render('projet/Frontend/postView.html.twig', ['post' => $post, 'comments' => $paginatedComments, 'userComments' => $userComments, 'vote' => $vote, 'postReport' => $postReport, 'signalements' => $isSignaled]);
     }
 
     /**

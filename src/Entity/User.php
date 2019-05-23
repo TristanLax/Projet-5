@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email")
@@ -43,9 +44,9 @@ class User implements UserInterface,\Serializable
 
     /**
      * @var array
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="text")
      */
-    private $roles = ['ROLE_USER'];
+    private $roles = '{"0":"ROLE_USER"}';
 
     /**
      * @var string|null
@@ -155,14 +156,15 @@ class User implements UserInterface,\Serializable
 
     public function getRoles(): array
     {
-        $roles = $this->roles;
+
+        $roles = $this->roles ? json_decode($this->roles, TRUE) : [];
 
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): void
     {
-        $this->roles = $roles;
+        $this->roles = $roles ? json_encode($roles, JSON_FORCE_OBJECT) : [];
     }
 
     public function getSalt()
@@ -205,9 +207,7 @@ class User implements UserInterface,\Serializable
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+
     public function serialize()
     {
         return serialize([
@@ -219,9 +219,6 @@ class User implements UserInterface,\Serializable
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function unserialize($serialized)
     {
         list(
@@ -232,6 +229,7 @@ class User implements UserInterface,\Serializable
             $this->roles,
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
+
 
     /**
      * @inheritDoc

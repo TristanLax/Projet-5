@@ -198,6 +198,7 @@ body
 
 }
 
+/* Tablettes */
 
 @media all and (min-width: 768px) and (max-width: 992px)
 {
@@ -212,6 +213,7 @@ body
     }
 }
 
+/* Smartphones */
 
 @media all and (max-width: 768px),
 all and (max-device-width: 480px)

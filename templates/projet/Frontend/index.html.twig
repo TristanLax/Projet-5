@@ -2,7 +2,7 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %} Index {% endblock %}
+{% block title %} La Boite à Rabiot {% endblock %}
 
 
 {% block body %}
@@ -16,7 +16,7 @@
     <h1 class="m-5 text-center">Posts les mieux votés :</h1>
     <div class="row flew">
         {% for post in votedPosts %}
-            <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                 <div class="card">
                     <div class="card-body">
                         <img src="/media/cache/thumb/images/main/{{ post.post.mainfile }}" class="card-img-top" alt="">
@@ -37,7 +37,7 @@
     <h1 class="m-5 text-center">Posts les plus récents :</h1>
     <div class="row flew">
         {% for post in posts %}
-            <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                 <div class="card">
                     <div class="card-body">
                         <img src="{{ vich_uploader_asset(post, 'mainImage') | imagine_filter('thumb') }}" class="card-img-top" alt="">

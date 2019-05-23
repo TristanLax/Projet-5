@@ -45,7 +45,7 @@ class IndexController extends AbstractController
     {
         $bestVotes = $this->repository->countVotes();
         $posts = $paginator->paginate(
-            $this->repository->findAll(),
+            $this->repository->findBy([], ['add_date' => 'DESC']),
             $request->query->getInt('page', 1),
             8);
 

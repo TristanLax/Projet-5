@@ -2,7 +2,7 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %} Message {% endblock %}
+{% block title %} {{ post.title }} {% endblock %}
 
 
 {% block body %}
@@ -109,7 +109,7 @@
 
                             <a href="{{ path('report.remove', {id: comment.id}) }}" data-commentid="{{ comment.id }}" class="btn btn-danger unreport">Annuler le signalement</a>
 
-                        {% elseif app.user != comment.author in comments %}
+                        {% elseif app.user and app.user!= comment.author in comments %}
 
                             <a href="{{ path('comment.report', {id: comment.id}) }}" data-commentid="{{ comment.id }}" class="btn btn-danger report">Signaler</a>
 
@@ -136,6 +136,10 @@
             </div>
 
         </div>
+
+    <div class="navigation d-flex justify-content-center m-3">
+        {{ knp_pagination_render(comments) }}
+    </div>
 
 
 {% endblock %}

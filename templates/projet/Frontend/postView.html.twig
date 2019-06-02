@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-12 text-center">
 
-                <h3 class="m-3">{{ post.title }}, posté par <a class="" href="{{ path('public.profil.index', {id: post.author.id}) }}">{{ post.author.username }}</a></h3>
+                <h3 class="m-3 index-main">{{ post.title }}, posté par <a class="" href="{{ path('public.profil.index', {id: post.author.id}) }}">{{ post.author.username }}</a></h3>
                 <br/>
                 <p>Sujet ouvert a {{ post.addDate|date('H:i') }} le {{ post.addDate|date('d:m:Y') }}</p>
 
@@ -59,7 +59,7 @@
 
                     {% if is_granted('ROLE_ADMIN') %}
 
-                        <a href="{{ path('admin.post.edit', {id: post.id}) }}" class="btn btn-info m-3">Modèrer</a>
+                        <a href="{{ path('admin.post.edit', {id: post.id}) }}" class="btn btn-info m-3">Modérer</a>
 
                     {% endif %}
                     </div>
@@ -68,6 +68,7 @@
             </div>
         </div>
 
+    <h2 class="m-5 text-center index-main">Commentaires :</h2>
             <div class="row">
             <div class="col-lg-12">
                 {% if app.user %}
@@ -124,7 +125,7 @@
 
                         {% if is_granted('ROLE_ADMIN') %}
 
-                            <a href="{{ path('admin.comment.edit', {id: comment.id}) }}" class="btn btn-info">Modèrer</a>
+                            <a href="{{ path('admin.comment.edit', {id: comment.id}) }}" class="btn btn-info">Modérer</a>
 
                         {% endif %}
                         </div>

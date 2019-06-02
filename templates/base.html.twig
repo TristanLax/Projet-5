@@ -3,14 +3,23 @@
 <html lang="fr">
     <head>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="La boite à Rabiot, votre site de partage d'image à propos de tous vos wargames favoris ! Venez poster vos photos de décors, de figurines et de peintures et discuter avec la communauté !" />
 
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-16x16.png') }}">
+
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-16x16.png') }}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/favicon/android-chrome-192x192.png') }}">
+        <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/favicon/android-chrome-512x512.png') }}">
+        <link rel="apple-touch-icon"  sizes="180x180" href="{{ asset('assets/favicon/apple-touch-icon.png') }}">
 
         <title>{% block title %}Welcome !{% endblock %}</title>
 
+
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu:500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('assets/css/projet.css') }}">
